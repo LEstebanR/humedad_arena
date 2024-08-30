@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,10 +16,6 @@ export default function Component() {
   const [pesoFinal, setPesoFinal] = useState("");
   const [pesoRecipiente, setPesoRecipiente] = useState("");
   const [humedad, setHumedad] = useState(0);
-
-  useEffect(() => {
-    calcularHumedad();
-  }, [pesoInicial, pesoFinal, pesoRecipiente]);
 
   const calcularHumedad = () => {
     const pi = parseFloat(pesoInicial);
@@ -73,7 +69,7 @@ export default function Component() {
           <div className="space-y-2">
             <Label htmlFor="pesoRecipiente" className="flex items-center gap-2">
               <CookingPot className="w-5 h-5" />
-              Peso del Recipiente (Olla) (g)
+              Peso del Recipiente(g)
             </Label>
             <Input
               id="pesoRecipiente"
@@ -102,16 +98,16 @@ export default function Component() {
       <footer className="mt-8 text-center text-sm text-gray-600">
         <div className="flex justify-center space-x-6">
           <a
-            href="https://tupaginapersonal.com"
+            href="https://lesteban.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center hover:text-gray-800 transition-colors duration-300"
           >
             <Globe className="w-4 h-4 mr-1" />
-            <span>Tu Nombre</span>
+            <span>LEsteban</span>
           </a>
           <a
-            href="https://github.com/tu-usuario/tu-repositorio"
+            href="https://github.com/LEstebanR/humedad_arena"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center hover:text-gray-800 transition-colors duration-300"
