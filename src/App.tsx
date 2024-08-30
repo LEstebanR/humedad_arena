@@ -10,8 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Droplets, Sun, CookingPot, Github, Globe } from "lucide-react";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Analytics } from "@vercel/analytics/react";
 
 export default function Component() {
   const [pesoInicial, setPesoInicial] = useState("");
