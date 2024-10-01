@@ -8,6 +8,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
 import { Droplets, Sun, CookingPot, Github, Globe } from "lucide-react";
 
@@ -31,6 +32,42 @@ export default function Component() {
     setHumedad(parseFloat(humedadCalculada.toFixed(2)));
   };
 
+  function obtenerFechaFormateada() {
+    const fecha = new Date();
+
+    const diasSemana = [
+      "Domingo",
+      "Lunes",
+      "Martes",
+      "Miércoles",
+      "Jueves",
+      "Viernes",
+      "Sábado",
+    ];
+    const meses = [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ];
+    const diaSemana = diasSemana[fecha.getDay()];
+    const dia = fecha.getDate();
+    const mes = meses[fecha.getMonth()];
+    const anio = fecha.getFullYear();
+
+    return `${diaSemana}, ${dia} de ${mes} de ${anio}`;
+  }
+
+  const FECHA = obtenerFechaFormateada();
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 p-4">
       <Card className="w-full max-w-md shadow-lg">
@@ -38,6 +75,7 @@ export default function Component() {
           <CardTitle className="text-2xl font-bold text-center">
             Calculadora de Humedad de Arena
           </CardTitle>
+          <CardDescription className="text-center">{FECHA}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
           <div className="space-y-2">
