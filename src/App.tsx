@@ -32,6 +32,12 @@ export default function Component() {
     setHumedad(parseFloat(humedadCalculada.toFixed(2)));
   };
 
+  const handleKeyDown = (event: { key: string }) => {
+    if (event.key === "Enter") {
+      calcularHumedad();
+    }
+  };
+
   function obtenerFechaFormateada() {
     const fecha = new Date();
 
@@ -89,6 +95,7 @@ export default function Component() {
               placeholder="Ingrese el peso de la arena húmeda"
               value={pesoInicial}
               onChange={(e) => setPesoInicial(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className="space-y-2">
@@ -102,6 +109,7 @@ export default function Component() {
               placeholder="Ingrese el peso de la arena seca"
               value={pesoFinal}
               onChange={(e) => setPesoFinal(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className="space-y-2">
@@ -115,6 +123,7 @@ export default function Component() {
               placeholder="Ingrese el peso de la olla"
               value={pesoRecipiente}
               onChange={(e) => setPesoRecipiente(e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </div>
         </CardContent>
