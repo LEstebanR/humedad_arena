@@ -87,12 +87,12 @@ export default function Component() {
           <div className="space-y-2">
             <Label htmlFor="pesoInicial" className="flex items-center gap-2">
               <Droplets className="w-5 h-5" />
-              Peso Inicial (Arena Húmeda) (g)
+              Peso Inicial (g)
             </Label>
             <Input
               id="pesoInicial"
               type="number"
-              placeholder="Ingrese el peso de la arena húmeda"
+              placeholder="Peso de la arena húmeda incluído el recipiente"
               value={pesoInicial}
               onChange={(e) => setPesoInicial(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -106,7 +106,7 @@ export default function Component() {
             <Input
               id="pesoFinal"
               type="number"
-              placeholder="Ingrese el peso de la arena seca"
+              placeholder="Peso de la arena seca incluído el recipiente"
               value={pesoFinal}
               onChange={(e) => setPesoFinal(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -120,7 +120,7 @@ export default function Component() {
             <Input
               id="pesoRecipiente"
               type="number"
-              placeholder="Ingrese el peso de la olla"
+              placeholder="Ingrese el peso del recipiente"
               value={pesoRecipiente}
               onChange={(e) => setPesoRecipiente(e.target.value)}
               onKeyDown={handleKeyDown}
