@@ -92,7 +92,7 @@ export default function Component() {
             <Input
               id="pesoInicial"
               type="number"
-              placeholder="Peso de la arena húmeda incluido el recipiente"
+              placeholder="Peso de la arena húmeda + recipiente"
               value={pesoInicial}
               onChange={(e) => setPesoInicial(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -106,7 +106,7 @@ export default function Component() {
             <Input
               id="pesoFinal"
               type="number"
-              placeholder="Peso de la arena seca incluido el recipiente"
+              placeholder="Peso de la arena seca + recipiente"
               value={pesoFinal}
               onChange={(e) => setPesoFinal(e.target.value)}
               onKeyDown={handleKeyDown}
