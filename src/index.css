@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -54,11 +57,72 @@
     --chart-4: 280 65% 60%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+    font-family: 'Space Grotesk', ui-sans-serif, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+}
+
+@layer utilities {
+  .input-field {
+    @apply w-full rounded-xl px-4 py-3 text-white text-base placeholder-white/20
+    focus:outline-none transition-all duration-200;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  .input-field:focus {
+    border-color: rgba(34, 211, 238, 0.5);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.08), 0 0 16px -4px rgba(34, 211, 238, 0.2);
+  }
+
+  .glass-card {
+    background: rgb(12, 18, 32);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+  }
+
+  /* Scan line animation */
+  @keyframes scanline {
+    0% { transform: translateY(-100%); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(400%); opacity: 0; }
+  }
+
+  .scan-line {
+    animation: scanline 3s ease-in-out infinite;
+  }
+
+  /* Traveling neon border */
+  @property --border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @keyframes border-spin {
+    to { --border-angle: 360deg; }
+  }
+
+  .neon-border {
+    --border-angle: 0deg;
+    animation: border-spin 3s linear infinite;
+    background: conic-gradient(
+      from var(--border-angle),
+      transparent 70%,
+      #22d3ee 83%,
+      #ffffff 88%,
+      #a78bfa 93%,
+      transparent
+    );
+    box-shadow:
+      0 0 18px -4px rgba(34, 211, 238, 0.4),
+      0 0 40px -10px rgba(124, 58, 237, 0.25);
   }
 }
