@@ -82,7 +82,7 @@
   }
 
   .glass-card {
-    background: rgba(12, 18, 32, 0.80);
+    background: rgb(12, 18, 32);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
   }
