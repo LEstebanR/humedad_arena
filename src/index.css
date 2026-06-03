@@ -99,13 +99,30 @@
     animation: scanline 3s ease-in-out infinite;
   }
 
-  /* Neon pulse for border */
-  @keyframes neon-pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
+  /* Traveling neon border */
+  @property --border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
   }
 
-  .neon-pulse {
-    animation: neon-pulse 3s ease-in-out infinite;
+  @keyframes border-spin {
+    to { --border-angle: 360deg; }
+  }
+
+  .neon-border {
+    --border-angle: 0deg;
+    animation: border-spin 3s linear infinite;
+    background: conic-gradient(
+      from var(--border-angle),
+      transparent 70%,
+      #22d3ee 83%,
+      #ffffff 88%,
+      #a78bfa 93%,
+      transparent
+    );
+    box-shadow:
+      0 0 18px -4px rgba(34, 211, 238, 0.4),
+      0 0 40px -10px rgba(124, 58, 237, 0.25);
   }
 }

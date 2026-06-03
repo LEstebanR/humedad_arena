@@ -150,11 +150,7 @@ export default function Component() {
         className="w-full max-w-md relative z-10"
       >
         {/* Neon border wrapper */}
-        <div className="relative rounded-2xl p-[1px] neon-pulse"
-          style={{
-            background: "linear-gradient(135deg, rgba(6,182,212,0.5) 0%, rgba(124,58,237,0.3) 50%, rgba(6,182,212,0.4) 100%)",
-            boxShadow: "0 0 30px -5px rgba(6,182,212,0.25), 0 0 60px -15px rgba(124,58,237,0.2), inset 0 0 30px -10px rgba(6,182,212,0.05)",
-          }}>
+        <div className="relative rounded-2xl p-[1px] neon-border">
 
           {/* Card */}
           <div className="glass-card rounded-2xl overflow-hidden">
@@ -169,24 +165,14 @@ export default function Component() {
                   style={{ background: "linear-gradient(90deg, transparent, #22d3ee, transparent)" }} />
               </div>
 
-              <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center relative"
-                    style={{ background: "linear-gradient(135deg, #06b6d4, #7c3aed)", boxShadow: "0 4px 16px -4px rgba(6,182,212,0.5)" }}>
-                    <FlaskConical className="w-4 h-4 text-white" />
-                  </div>
-                  <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-cyan-400/60">
-                    Laboratorio
-                  </p>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center relative"
+                  style={{ background: "linear-gradient(135deg, #06b6d4, #7c3aed)", boxShadow: "0 4px 16px -4px rgba(6,182,212,0.5)" }}>
+                  <FlaskConical className="w-4 h-4 text-white" />
                 </div>
-                {/* Live indicator */}
-                <div className="flex items-center gap-1.5">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                  </span>
-                  <span className="text-[10px] text-emerald-400/60 font-medium tracking-widest uppercase">En línea</span>
-                </div>
+                <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-cyan-400/60">
+                  Laboratorio
+                </p>
               </div>
 
               <h1 className="text-[1.6rem] font-semibold text-white tracking-tight leading-tight mb-1">
