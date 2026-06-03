@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Droplets, Sun, Container, Heart, Loader2, FlaskConical } from "lucide-react";
+import { Droplets, Sun, Container, Heart, Loader2, FlaskConical, CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Component() {
@@ -40,14 +40,9 @@ export default function Component() {
 
   function obtenerFechaFormateada() {
     const fecha = new Date();
-    const diasSemana = [
-      "Domingo", "Lunes", "Martes", "Miércoles",
-      "Jueves", "Viernes", "Sábado",
-    ];
-    const meses = [
-      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
-    ];
+    const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+    const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     const diaSemana = diasSemana[fecha.getDay()];
     const dia = fecha.getDate();
     const mes = meses[fecha.getMonth()];
@@ -57,12 +52,41 @@ export default function Component() {
 
   const FECHA = obtenerFechaFormateada();
 
-  const getHumidityColor = (value: number) => {
-    if (value <= 0) return "from-cyan-400 to-teal-400";
-    if (value < 3) return "from-emerald-400 to-teal-400";
-    if (value < 6) return "from-amber-400 to-orange-400";
-    return "from-rose-400 to-red-500";
+  const getHumidityMeta = (value: number) => {
+    if (!hasResult) return null;
+    if (value < 3) return {
+      gradient: "from-emerald-400 to-teal-300",
+      barColor: "#34d399",
+      badgeBg: "rgba(16, 185, 129, 0.12)",
+      badgeBorder: "rgba(16, 185, 129, 0.25)",
+      badgeText: "text-emerald-400",
+      label: "Arena Óptima",
+      desc: "Lista para mezcla. Contenido de humedad ideal.",
+      Icon: CheckCircle2,
+    };
+    if (value < 6) return {
+      gradient: "from-amber-400 to-orange-300",
+      barColor: "#fbbf24",
+      badgeBg: "rgba(245, 158, 11, 0.12)",
+      badgeBorder: "rgba(245, 158, 11, 0.25)",
+      badgeText: "text-amber-400",
+      label: "Humedad Moderada",
+      desc: "Ajustar proporción de agua en la mezcla.",
+      Icon: AlertTriangle,
+    };
+    return {
+      gradient: "from-rose-400 to-red-400",
+      barColor: "#f87171",
+      badgeBg: "rgba(244, 63, 94, 0.12)",
+      badgeBorder: "rgba(244, 63, 94, 0.25)",
+      badgeText: "text-rose-400",
+      label: "Humedad Excesiva",
+      desc: "Se recomienda secar antes de usar.",
+      Icon: XCircle,
+    };
   };
+
+  const meta = getHumidityMeta(humedad);
 
   const fields = [
     {
@@ -98,153 +122,199 @@ export default function Component() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4 py-8"
-      style={{ background: "linear-gradient(135deg, #080e1f 0%, #0d1730 40%, #0a1a2e 70%, #06111f 100%)" }}>
-
-      {/* Background decorative blobs */}
+    <div
+      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden px-4 py-8"
+      style={{ background: "linear-gradient(135deg, #060c1a 0%, #0b1528 50%, #07101e 100%)" }}
+    >
+      {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-20"
-          style={{ background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)", filter: "blur(60px)" }} />
-        <div className="absolute -bottom-40 -right-20 w-80 h-80 rounded-full opacity-15"
-          style={{ background: "radial-gradient(circle, #818cf8 0%, transparent 70%)", filter: "blur(60px)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-5"
-          style={{ background: "radial-gradient(circle, #22d3ee 0%, transparent 60%)", filter: "blur(80px)" }} />
+        <div className="absolute -top-48 -left-48 w-[500px] h-[500px] rounded-full opacity-20"
+          style={{ background: "radial-gradient(circle, #06b6d4 0%, transparent 65%)", filter: "blur(70px)" }} />
+        <div className="absolute -bottom-48 -right-24 w-96 h-96 rounded-full opacity-15"
+          style={{ background: "radial-gradient(circle, #7c3aed 0%, transparent 65%)", filter: "blur(70px)" }} />
+        <div className="absolute top-1/2 right-0 w-72 h-72 opacity-10"
+          style={{ background: "radial-gradient(circle, #0ea5e9 0%, transparent 60%)", filter: "blur(60px)" }} />
       </div>
 
-      {/* Subtle grid */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+      {/* Grid */}
+      <div className="absolute inset-0 opacity-[0.025] pointer-events-none"
         style={{
-          backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
+          backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
         }} />
 
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 28 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+        transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-md relative z-10"
       >
-        {/* Card */}
-        <div className="glass-card rounded-2xl overflow-hidden shadow-2xl">
+        {/* Neon border wrapper */}
+        <div className="relative rounded-2xl p-[1px] neon-pulse"
+          style={{
+            background: "linear-gradient(135deg, rgba(6,182,212,0.5) 0%, rgba(124,58,237,0.3) 50%, rgba(6,182,212,0.4) 100%)",
+            boxShadow: "0 0 30px -5px rgba(6,182,212,0.25), 0 0 60px -15px rgba(124,58,237,0.2), inset 0 0 30px -10px rgba(6,182,212,0.05)",
+          }}>
 
-          {/* Header */}
-          <div className="px-8 pt-8 pb-6 border-b border-white/[0.06]">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center"
-                style={{ background: "linear-gradient(135deg, #06b6d4, #0891b2)" }}>
-                <FlaskConical className="w-4 h-4 text-white" />
+          {/* Card */}
+          <div className="glass-card rounded-2xl overflow-hidden">
+
+            {/* Header */}
+            <div className="relative px-8 pt-8 pb-6 overflow-hidden"
+              style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+
+              {/* Scan line effect */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="scan-line absolute left-0 right-0 h-[1px] opacity-30"
+                  style={{ background: "linear-gradient(90deg, transparent, #22d3ee, transparent)" }} />
               </div>
-              <div>
-                <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-cyan-400/70">
-                  Laboratorio
-                </p>
+
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center relative"
+                    style={{ background: "linear-gradient(135deg, #06b6d4, #7c3aed)", boxShadow: "0 4px 16px -4px rgba(6,182,212,0.5)" }}>
+                    <FlaskConical className="w-4 h-4 text-white" />
+                  </div>
+                  <p className="text-[10px] font-semibold tracking-[0.18em] uppercase text-cyan-400/60">
+                    Laboratorio
+                  </p>
+                </div>
+                {/* Live indicator */}
+                <div className="flex items-center gap-1.5">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                  </span>
+                  <span className="text-[10px] text-emerald-400/60 font-medium tracking-widest uppercase">En línea</span>
+                </div>
               </div>
+
+              <h1 className="text-[1.6rem] font-semibold text-white tracking-tight leading-tight mb-1">
+                Calculadora de Humedad
+              </h1>
+              <p className="text-sm text-white/30 font-light tracking-wide">{FECHA}</p>
             </div>
 
-            <h1 className="text-2xl font-semibold text-white tracking-tight leading-tight mb-1">
-              Calculadora de Humedad
-            </h1>
-            <p className="text-sm text-white/35 font-normal">{FECHA}</p>
-          </div>
-
-          {/* Form */}
-          <div className="px-8 py-7 space-y-5">
-            {fields.map((field, index) => {
-              const Icon = field.icon;
-              return (
-                <motion.div
-                  key={field.id}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 + index * 0.07 }}
-                >
-                  <label htmlFor={field.id} className="block mb-2">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <Icon className={`w-3.5 h-3.5 ${field.iconColor}`} />
-                      <span className="text-xs font-medium text-white/70">
-                        {field.label}
+            {/* Form */}
+            <div className="px-8 py-7 space-y-5">
+              {fields.map((field, index) => {
+                const Icon = field.icon;
+                return (
+                  <motion.div
+                    key={field.id}
+                    initial={{ opacity: 0, x: -14 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.12 + index * 0.08 }}
+                  >
+                    <label htmlFor={field.id} className="block mb-2 cursor-pointer">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <Icon className={`w-3.5 h-3.5 ${field.iconColor}`} />
+                        <span className="text-sm font-medium text-white/65">
+                          {field.label}
+                        </span>
+                      </div>
+                      <span className="text-xs text-white/25 pl-[22px]">
+                        {field.description}
                       </span>
+                    </label>
+                    <input
+                      id={field.id}
+                      type="number"
+                      inputMode="numeric"
+                      placeholder={field.placeholder}
+                      value={field.value}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      onKeyDown={handleKeyDown}
+                      className="input-field"
+                    />
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Result */}
+            <div className="px-8 pb-8">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={hasResult ? `result-${humedad}` : "empty"}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="rounded-xl overflow-hidden mb-5"
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                  }}
+                >
+                  {/* Result value row */}
+                  <div className="px-6 pt-5 pb-4 flex items-center justify-between">
+                    <div>
+                      <p className="text-[10px] font-semibold tracking-[0.14em] uppercase text-white/25 mb-2">
+                        Humedad de la Arena
+                      </p>
+                      <p className={`text-5xl font-semibold tracking-tight bg-gradient-to-r ${meta ? meta.gradient : "from-white/30 to-white/20"} bg-clip-text text-transparent`}>
+                        {humedad}%
+                      </p>
                     </div>
-                    <span className="text-[10px] text-white/25 pl-[22px]">
-                      {field.description}
-                    </span>
-                  </label>
-                  <input
-                    id={field.id}
-                    type="number"
-                    inputMode="numeric"
-                    placeholder={field.placeholder}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className="input-field"
-                  />
-                </motion.div>
-              );
-            })}
-          </div>
 
-          {/* Result */}
-          <div className="px-8 pb-6">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={hasResult ? "result" : "empty"}
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.35 }}
-                className="rounded-xl border border-white/[0.07] overflow-hidden mb-5"
-                style={{ background: "rgba(255,255,255,0.03)" }}
-              >
-                <div className="px-6 py-5 flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] font-semibold tracking-[0.12em] uppercase text-white/30 mb-1">
-                      Humedad de la Arena
-                    </p>
-                    <motion.p
-                      key={humedad}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className={`text-4xl font-light tracking-tight bg-gradient-to-r ${getHumidityColor(humedad)} bg-clip-text text-transparent`}
-                    >
-                      {humedad}%
-                    </motion.p>
+                    {/* Animated ring icon */}
+                    {hasResult && meta && (
+                      <motion.div
+                        initial={{ scale: 0, rotate: -90 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                        className="relative w-14 h-14 flex items-center justify-center rounded-full"
+                        style={{ background: meta.badgeBg, border: `1px solid ${meta.badgeBorder}` }}
+                      >
+                        <meta.Icon className={`w-6 h-6 ${meta.badgeText}`} />
+                      </motion.div>
+                    )}
                   </div>
-                  {hasResult && (
-                    <motion.div
-                      initial={{ scale: 0, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      className="w-12 h-12 rounded-full flex items-center justify-center"
-                      style={{ background: "rgba(6, 182, 212, 0.1)", border: "1px solid rgba(6, 182, 212, 0.2)" }}
-                    >
-                      <Droplets className="w-5 h-5 text-cyan-400" />
-                    </motion.div>
-                  )}
-                </div>
-                {hasResult && (
-                  <div className="h-[2px] w-full"
-                    style={{ background: `linear-gradient(90deg, transparent, ${humedad < 3 ? "#34d399" : humedad < 6 ? "#fbbf24" : "#f87171"}, transparent)` }} />
-                )}
-              </motion.div>
-            </AnimatePresence>
 
-            {/* Button */}
-            <motion.button
-              onClick={calcularHumedad}
-              disabled={isCalculating}
-              whileHover={{ scale: isCalculating ? 1 : 1.01 }}
-              whileTap={{ scale: isCalculating ? 1 : 0.99 }}
-              className="w-full py-3 px-6 rounded-xl text-sm font-semibold text-white
-                transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed
-                flex items-center justify-center gap-2 relative overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, #0891b2, #0e7490)",
-                boxShadow: "0 4px 24px -4px rgba(6, 182, 212, 0.35), inset 0 1px 0 rgba(255,255,255,0.1)",
-              }}
-            >
-              <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
-                style={{ background: "linear-gradient(135deg, #06b6d4, #0891b2)" }} />
-              <span className="relative z-10 flex items-center gap-2">
+                  {/* Status badge — the surprise */}
+                  <AnimatePresence>
+                    {hasResult && meta && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="px-6 pb-5"
+                      >
+                        <div className="rounded-lg px-4 py-3 flex items-start gap-3"
+                          style={{ background: meta.badgeBg, border: `1px solid ${meta.badgeBorder}` }}>
+                          <meta.Icon className={`w-4 h-4 mt-0.5 shrink-0 ${meta.badgeText}`} />
+                          <div>
+                            <p className={`text-sm font-semibold ${meta.badgeText}`}>{meta.label}</p>
+                            <p className="text-xs text-white/40 mt-0.5">{meta.desc}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* Color bar */}
+                  {hasResult && meta && (
+                    <div className="h-[2px]"
+                      style={{ background: `linear-gradient(90deg, transparent 0%, ${meta.barColor} 50%, transparent 100%)` }} />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Button */}
+              <motion.button
+                onClick={calcularHumedad}
+                disabled={isCalculating}
+                whileHover={{ scale: isCalculating ? 1 : 1.015 }}
+                whileTap={{ scale: isCalculating ? 1 : 0.985 }}
+                className="w-full py-3.5 px-6 rounded-xl text-base font-semibold text-white
+                  transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+                  flex items-center justify-center gap-2 relative overflow-hidden"
+                style={{
+                  background: "linear-gradient(135deg, #0891b2 0%, #6d28d9 100%)",
+                  boxShadow: "0 4px 28px -4px rgba(6,182,212,0.4), 0 4px 28px -8px rgba(109,40,217,0.3), inset 0 1px 0 rgba(255,255,255,0.12)",
+                }}
+              >
                 {isCalculating ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -253,8 +323,8 @@ export default function Component() {
                 ) : (
                   "Calcular Humedad"
                 )}
-              </span>
-            </motion.button>
+              </motion.button>
+            </div>
           </div>
         </div>
 
@@ -262,7 +332,7 @@ export default function Component() {
         <motion.footer
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="mt-6 flex items-center justify-center gap-1.5"
         >
           <span className="text-xs text-white/20">Hecho con</span>
